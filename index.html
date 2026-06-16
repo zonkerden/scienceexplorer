@@ -603,6 +603,15 @@ body {
 
     <div class="page-wrapper">
 
+        <!-- ═══════════ AUTH BAR ═══════════ -->
+        <div class="auth-bar" id="auth-bar">
+            <div id="auth-user-info" class="hidden" style="display: flex; align-items: center; gap: 10px;">
+                <span id="auth-email-display" style="font-size: 13px; color: var(--text-2); font-weight: 600;"></span>
+                <button id="logout-btn" class="btn btn-ghost btn-sm" style="padding: 4px 10px; font-size: 12px;">Logout</button>
+            </div>
+            <button id="show-login-btn" class="btn btn-outline btn-sm" style="padding: 6px 14px; font-size: 13px;">Login / Cloud Save</button>
+        </div>
+
         <!-- ═══════════ SETUP SCREEN ═══════════ -->
         <section id="setup-screen" class="screen active" role="main">
             <div class="card setup-card">
@@ -781,8 +790,33 @@ body {
             </div>
         </section>
 
+        <!-- ═══════════ AUTH MODAL ═══════════ -->
+        <div id="auth-modal" class="modal hidden">
+            <div class="modal-content card" style="max-width: 360px;">
+                <h2 class="modal-title" style="margin-bottom: 8px; text-align: center;">Cloud Save</h2>
+                <p class="modal-sub" style="font-size: 13px; color: var(--text-2); text-align: center; margin-bottom: 20px;">Log in to save your progress across all devices.</p>
+                <div class="input-group">
+                    <label class="input-label" for="auth-email">EMAIL</label>
+                    <input type="email" id="auth-email" class="name-input" placeholder="scientist@example.com">
+                </div>
+                <div class="input-group">
+                    <label class="input-label" for="auth-password">PASSWORD</label>
+                    <input type="password" id="auth-password" class="name-input" placeholder="••••••••">
+                </div>
+                <div id="auth-error" class="auth-error hidden" style="color: var(--wrong); font-size: 13px; text-align: center; margin-bottom: 15px; font-weight: 600;"></div>
+                <div class="auth-actions" style="display: flex; flex-direction: column; gap: 10px;">
+                    <button id="login-submit-btn" class="btn btn-primary">Login</button>
+                    <button id="register-submit-btn" class="btn btn-outline">Create Account</button>
+                </div>
+                <button id="close-auth-btn" class="btn btn-ghost btn-full" style="margin-top: 12px">Cancel</button>
+            </div>
+        </div>
+
+    </div>
+
     <!-- Firebase Compat Libraries for local file:// execution -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script src="questions.js"></script>

@@ -132,7 +132,7 @@ body {
 .screen {
     display: none;
     width: 100%;
-    max-width: 540px;
+    max-width: clamp(540px, 90vw, 800px);
 }
 
 .screen.active {
@@ -690,6 +690,47 @@ body {
 .breakdown-item.wrong-item .bd-result {
     color: var(--wrong);
     background: var(--wrong-bg);
+}
+
+/* ============================================
+   AUTH UI
+   ============================================ */
+.auth-bar {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.modal.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-content {
+    width: 90%;
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.modal.hidden .modal-content {
+    transform: translateY(20px);
 }
 
 /* ============================================

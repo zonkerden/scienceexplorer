@@ -10,6 +10,8 @@ const firebaseConfig = {
 // Initialize Firebase using compat scripts loaded in index.html
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
+const auth = firebase.auth();
+let currentUser = null;
 
 /* =================================================
    SCIENCE EXPLORER — main.js  (Full Feature Build)
@@ -91,6 +93,18 @@ const backBtn          = document.getElementById('back-btn');
 const clearLbBtn       = document.getElementById('clear-lb-btn');
 const muteBtn          = document.getElementById('mute-btn');
 const themeBtn         = document.getElementById('theme-btn');
+
+const authUserInfo     = document.getElementById('auth-user-info');
+const authEmailDisplay = document.getElementById('auth-email-display');
+const logoutBtn        = document.getElementById('logout-btn');
+const showLoginBtn     = document.getElementById('show-login-btn');
+const authModal        = document.getElementById('auth-modal');
+const authEmailInput   = document.getElementById('auth-email');
+const authPasswordInput= document.getElementById('auth-password');
+const authError        = document.getElementById('auth-error');
+const loginSubmitBtn   = document.getElementById('login-submit-btn');
+const registerSubmitBtn= document.getElementById('register-submit-btn');
+const closeAuthBtn     = document.getElementById('close-auth-btn');
 
 const qCurrent         = document.getElementById('q-current');
 const qTotal           = document.getElementById('q-total');
@@ -329,6 +343,105 @@ difficultyGrid.addEventListener('click', e => {
     difficulty = btn.dataset.diff;
     playSound('click');
 });
+
+// ── Authentication ──────────────────────────────────────
+auth.onAuthStateChanged(async (user) => {
+    currentUser = user;
+    if (user) {
+        if(authUserInfo) authUserInfo.classList.remove('hidden');
+        if(showLoginBtn) showLoginBtn.classList.add('hidden');
+        if(authEmailDisplay) authEmailDisplay.textContent = user.email;
+        await loadCloudProgress(user.uid);
+    } else {
+        if(authUserInfo) authUserInfo.classList.add('hidden');
+        if(showLoginBtn) showLoginBtn.classList.remove('hidden');
+        if(authEmailDisplay) authEmailDisplay.textContent = '';
+    }
+});
+
+if(showLoginBtn) showLoginBtn.addEventListener('click', () => {
+    playSound('click');
+    authError.classList.add('hidden');
+    authEmailInput.value = '';
+    authPasswordInput.value = '';
+    authModal.classList.remove('hidden');
+});
+if(closeAuthBtn) closeAuthBtn.addEventListener('click', () => {
+    playSound('click');
+    authModal.classList.add('hidden');
+});
+if(logoutBtn) logoutBtn.addEventListener('click', () => {
+    playSound('click');
+    auth.signOut();
+});
+
+async function handleAuthAction(action) {
+    playSound('click');
+    authError.classList.add('hidden');
+    const email = authEmailInput.value.trim();
+    const pass = authPasswordInput.value.trim();
+    if (!email || !pass) {
+        authError.textContent = "Email and password required.";
+        authError.classList.remove('hidden');
+        return;
+    }
+    try {
+        if (action === 'login') {
+            await auth.signInWithEmailAndPassword(email, pass);
+        } else {
+            await auth.createUserWithEmailAndPassword(email, pass);
+        }
+        authModal.classList.add('hidden');
+    } catch(err) {
+        authError.textContent = err.message;
+        authError.classList.remove('hidden');
+    }
+}
+if(loginSubmitBtn) loginSubmitBtn.addEventListener('click', () => handleAuthAction('login'));
+if(registerSubmitBtn) registerSubmitBtn.addEventListener('click', () => handleAuthAction('register'));
+
+async function loadCloudProgress(uid) {
+    try {
+        const docRef = await db.collection('users').doc(uid).get();
+        if (docRef.exists) {
+            const data = docRef.data();
+            if (data.playerName) playerNameInput.value = data.playerName;
+            if (data.maxStreak !== undefined) maxStreak = data.maxStreak;
+            if (data.speedBonus !== undefined) speedBonus = data.speedBonus;
+            if (data.unlockedAchs) unlockedAchs = new Set(data.unlockedAchs);
+            if (data.exploredSet) exploredSet = new Set(data.exploredSet);
+            if (data.winsByScore) winsByScore = data.winsByScore;
+            
+            localStorage.setItem(LS_STREAK, maxStreak);
+            localStorage.setItem(LS_SPEED_BONUS, speedBonus);
+            localStorage.setItem(LS_ACHIEVEMENTS, JSON.stringify([...unlockedAchs]));
+            localStorage.setItem(LS_EXPLORED, JSON.stringify([...exploredSet]));
+            localStorage.setItem(LS_WIN_COUNT, JSON.stringify(winsByScore));
+            updateExploreCount();
+            console.log("Cloud progress loaded successfully!");
+        }
+    } catch (e) {
+        console.error("Failed to load cloud progress:", e);
+    }
+}
+
+async function saveCloudProgress() {
+    if (!currentUser) return;
+    try {
+        await db.collection('users').doc(currentUser.uid).set({
+            playerName: playerName,
+            maxStreak: maxStreak,
+            speedBonus: speedBonus,
+            unlockedAchs: [...unlockedAchs],
+            exploredSet: [...exploredSet],
+            winsByScore: winsByScore,
+            lastPlayed: new Date().toISOString()
+        }, { merge: true });
+        console.log("Cloud progress saved successfully!");
+    } catch(e) {
+        console.error("Failed to save cloud progress:", e);
+    }
+}
 
 // ── Main Events ───────────────────────────────────────
 startBtn.addEventListener('click', () => {
@@ -690,6 +803,7 @@ function showResults() {
 
     // Save to leaderboard
     saveScore(totalPts, score, total);
+    saveCloudProgress();
 
     showScreen(resultScreen);
 }
