@@ -1,0 +1,85 @@
+const ALL_QUESTIONS = [
+    // 🌍 Earth
+    { category: "🌍 Earth", question: "What is the hottest layer of the Earth?", options: ["Inner Core", "Mantle", "Crust", "Outer Core"], correctIndex: 0 },
+    { category: "🌍 Earth", question: "Which natural disaster is measured using the Richter scale?", options: ["Tornado", "Earthquake", "Hurricane", "Tsunami"], correctIndex: 1 },
+    { category: "🌍 Earth", question: "What is the longest river in the world?", options: ["Amazon", "Yangtze", "Nile", "Mississippi"], correctIndex: 2 },
+    { category: "🌍 Earth", question: "What type of rock is formed by cooling lava?", options: ["Sedimentary", "Metamorphic", "Igneous", "Limestone"], correctIndex: 2 },
+    { category: "🌍 Earth", question: "What gas makes up the majority of Earth's atmosphere?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Helium"], correctIndex: 2 },
+    { category: "🌍 Earth", question: "What causes the ocean's tides?", options: ["The Moon's gravity", "Underwater earthquakes", "High winds", "The Sun's heat"], correctIndex: 0 },
+    { category: "🌍 Earth", question: "What is the name of the supercontinent that existed millions of years ago?", options: ["Atlantis", "Pangea", "Gondwana", "Eurasia"], correctIndex: 1 },
+    { category: "🌍 Earth", question: "Which ocean is the largest on Earth?", options: ["Atlantic", "Indian", "Arctic", "Pacific"], correctIndex: 3 },
+    { category: "🌍 Earth", question: "What process turns liquid water into vapor?", options: ["Condensation", "Evaporation", "Freezing", "Precipitation"], correctIndex: 1 },
+    { category: "🌍 Earth", question: "What do we call a mountain that erupts with magma?", options: ["Glacier", "Canyon", "Plateau", "Volcano"], correctIndex: 3 },
+
+    // 🐾 Animals
+    { category: "🐾 Animals", question: "What is the fastest land animal in the world?", options: ["Lion", "Horse", "Cheetah", "Leopard"], correctIndex: 2 },
+    { category: "🐾 Animals", question: "Which bird is known as the universal symbol of peace?", options: ["Eagle", "Dove", "Crow", "Owl"], correctIndex: 1 },
+    { category: "🐾 Animals", question: "What is a group of lions called?", options: ["A Flock", "A Herd", "A Pack", "A Pride"], correctIndex: 3 },
+    { category: "🐾 Animals", question: "Which animal is known to have the longest lifespan?", options: ["Elephant", "Giant Tortoise", "Blue Whale", "Parrot"], correctIndex: 1 },
+    { category: "🐾 Animals", question: "What do you call an animal that only eats plants?", options: ["Carnivore", "Omnivore", "Herbivore", "Predator"], correctIndex: 2 },
+    { category: "🐾 Animals", question: "Which mammal can truly fly?", options: ["Flying Squirrel", "Bat", "Sugar Glider", "Lemur"], correctIndex: 1 },
+    { category: "🐾 Animals", question: "How many legs does a spider have?", options: ["Six", "Eight", "Ten", "Four"], correctIndex: 1 },
+    { category: "🐾 Animals", question: "What is the largest living species of lizard?", options: ["Iguana", "Gecko", "Komodo Dragon", "Chameleon"], correctIndex: 2 },
+    { category: "🐾 Animals", question: "Which sea creature has three hearts?", options: ["Shark", "Whale", "Octopus", "Jellyfish"], correctIndex: 2 },
+    { category: "🐾 Animals", question: "What do caterpillars turn into?", options: ["Bees", "Butterflies", "Beetles", "Ants"], correctIndex: 1 },
+
+    // 🔭 Space
+    { category: "🔭 Space", question: "Which planet is known as the Red Planet?", options: ["Venus", "Mars", "Jupiter", "Saturn"], correctIndex: 1 },
+    { category: "🔭 Space", question: "What is the largest planet in our solar system?", options: ["Earth", "Saturn", "Jupiter", "Neptune"], correctIndex: 2 },
+    { category: "🔭 Space", question: "What galaxy do we live in?", options: ["Andromeda", "Milky Way", "Sombrero", "Triangulum"], correctIndex: 1 },
+    { category: "🔭 Space", question: "What do we call a rock from space that hits Earth's surface?", options: ["Meteorite", "Comet", "Asteroid", "Star"], correctIndex: 0 },
+    { category: "🔭 Space", question: "Which planet has the most prominent ring system?", options: ["Uranus", "Neptune", "Jupiter", "Saturn"], correctIndex: 3 },
+    { category: "🔭 Space", question: "What is the closest star to Earth?", options: ["Sirius", "Polaris", "The Sun", "Alpha Centauri"], correctIndex: 2 },
+    { category: "🔭 Space", question: "Who was the first human to walk on the moon?", options: ["Buzz Aldrin", "Yuri Gagarin", "Neil Armstrong", "John Glenn"], correctIndex: 2 },
+    { category: "🔭 Space", question: "What force keeps the planets in orbit around the Sun?", options: ["Magnetism", "Gravity", "Friction", "Electricity"], correctIndex: 1 },
+    { category: "🔭 Space", question: "Which planet is closest to the Sun?", options: ["Venus", "Earth", "Mars", "Mercury"], correctIndex: 3 },
+    { category: "🔭 Space", question: "What is a black hole?", options: ["A dark star", "A region of intense gravity", "An empty space", "A large planet"], correctIndex: 1 },
+
+    // 🌿 Plants
+    { category: "🌿 Plants", question: "What process do plants use to make their own food?", options: ["Respiration", "Digestion", "Photosynthesis", "Evaporation"], correctIndex: 2 },
+    { category: "🌿 Plants", question: "What gives plant leaves their green color?", options: ["Chlorophyll", "Sunlight", "Water", "Soil"], correctIndex: 0 },
+    { category: "🌿 Plants", question: "What part of the plant absorbs water from the soil?", options: ["Leaves", "Stem", "Roots", "Flowers"], correctIndex: 2 },
+    { category: "🌿 Plants", question: "What gas do plants absorb from the atmosphere?", options: ["Oxygen", "Nitrogen", "Helium", "Carbon Dioxide"], correctIndex: 3 },
+    { category: "🌿 Plants", question: "What sweet liquid do bees collect from flowers?", options: ["Sap", "Nectar", "Water", "Pollen"], correctIndex: 1 },
+    { category: "🌿 Plants", question: "Which part of a plant protects its seeds?", options: ["The Fruit", "The Root", "The Leaf", "The Stem"], correctIndex: 0 },
+    { category: "🌿 Plants", question: "What is the tallest type of grass in the world?", options: ["Wheat", "Bamboo", "Corn", "Sugarcane"], correctIndex: 1 },
+    { category: "🌿 Plants", question: "What part of the plant holds it upright?", options: ["Roots", "Leaves", "Stem", "Petals"], correctIndex: 2 },
+    { category: "🌿 Plants", question: "How can you easily tell the age of a tree?", options: ["Counting its leaves", "Measuring its height", "Counting its rings", "Checking its roots"], correctIndex: 2 },
+    { category: "🌿 Plants", question: "What do plants release into the air that we need to breathe?", options: ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"], correctIndex: 1 },
+
+    // 🦴 Human Body
+    { category: "🦴 Human Body", question: "Which organ is primarily responsible for pumping blood?", options: ["Lungs", "Brain", "Liver", "Heart"], correctIndex: 3 },
+    { category: "🦴 Human Body", question: "How many bones are in an adult human body?", options: ["150", "206", "312", "198"], correctIndex: 1 },
+    { category: "🦴 Human Body", question: "What is the largest organ of the human body?", options: ["Skin", "Liver", "Heart", "Brain"], correctIndex: 0 },
+    { category: "🦴 Human Body", question: "Which part of the eye controls how much light enters?", options: ["Retina", "Cornea", "Lens", "Pupil"], correctIndex: 3 },
+    { category: "🦴 Human Body", question: "What connects your muscles to your bones?", options: ["Veins", "Tendons", "Ligaments", "Cartilage"], correctIndex: 1 },
+    { category: "🦴 Human Body", question: "Where are your red blood cells produced?", options: ["Heart", "Liver", "Bone Marrow", "Kidneys"], correctIndex: 2 },
+    { category: "🦴 Human Body", question: "What do lungs take in when you breathe?", options: ["Carbon Dioxide", "Oxygen", "Nitrogen", "Hydrogen"], correctIndex: 1 },
+    { category: "🦴 Human Body", question: "How many teeth does a normal adult have?", options: ["28", "30", "32", "34"], correctIndex: 2 },
+    { category: "🦴 Human Body", question: "What part of the brain controls balance and coordination?", options: ["Cerebrum", "Cerebellum", "Brainstem", "Thalamus"], correctIndex: 1 },
+    { category: "🦴 Human Body", question: "Which blood type is known as the universal donor?", options: ["Type A", "Type B", "Type AB", "Type O"], correctIndex: 3 },
+
+    // ⚗️ Matter
+    { category: "⚗️ Matter", question: "What state of matter has a fixed shape and volume?", options: ["Solid", "Liquid", "Gas", "Plasma"], correctIndex: 0 },
+    { category: "⚗️ Matter", question: "What happens to water when it boils?", options: ["It turns into ice", "It turns into a gas", "It turns into plasma", "It disappears"], correctIndex: 1 },
+    { category: "⚗️ Matter", question: "What is the chemical formula for water?", options: ["CO2", "O2", "H2O", "NaCl"], correctIndex: 2 },
+    { category: "⚗️ Matter", question: "Which of these is a liquid at room temperature?", options: ["Iron", "Wood", "Water", "Oxygen"], correctIndex: 2 },
+    { category: "⚗️ Matter", question: "What do we call the transition from a solid directly to a gas?", options: ["Melting", "Sublimation", "Evaporation", "Condensation"], correctIndex: 1 },
+    { category: "⚗️ Matter", question: "What is the lightest element on the periodic table?", options: ["Oxygen", "Carbon", "Helium", "Hydrogen"], correctIndex: 3 },
+    { category: "⚗️ Matter", question: "Everything in the universe is made up of tiny particles called what?", options: ["Cells", "Atoms", "Dust", "Bacteria"], correctIndex: 1 },
+    { category: "⚗️ Matter", question: "What happens to metal when it rusts?", options: ["It undergoes a chemical change", "It melts", "It becomes a gas", "It evaporates"], correctIndex: 0 },
+    { category: "⚗️ Matter", question: "Which state of matter takes the exact shape of its container?", options: ["Solid", "Liquid", "Crystal", "Ice"], correctIndex: 1 },
+    { category: "⚗️ Matter", question: "What is a mixture of two or more metals called?", options: ["Compound", "Solution", "Alloy", "Isotope"], correctIndex: 2 },
+
+    // ⚡ Physics
+    { category: "⚡ Physics", question: "What force slows down a moving object when it rubs against something?", options: ["Gravity", "Friction", "Magnetism", "Momentum"], correctIndex: 1 },
+    { category: "⚡ Physics", question: "Sound travels fastest through which of the following?", options: ["Air", "Water", "Solids", "A Vacuum"], correctIndex: 2 },
+    { category: "⚡ Physics", question: "What do you use to split white light into a rainbow?", options: ["A Mirror", "A Prism", "A Lens", "A Magnet"], correctIndex: 1 },
+    { category: "⚡ Physics", question: "What is the measure of how hot or cold something is?", options: ["Volume", "Mass", "Temperature", "Density"], correctIndex: 2 },
+    { category: "⚡ Physics", question: "Which of these materials is a good conductor of electricity?", options: ["Wood", "Plastic", "Rubber", "Copper"], correctIndex: 3 },
+    { category: "⚡ Physics", question: "Who famously discovered the law of gravity after an apple fell near him?", options: ["Albert Einstein", "Isaac Newton", "Galileo Galilei", "Nikola Tesla"], correctIndex: 1 },
+    { category: "⚡ Physics", question: "What type of energy does a moving car have?", options: ["Potential Energy", "Thermal Energy", "Kinetic Energy", "Nuclear Energy"], correctIndex: 2 },
+    { category: "⚡ Physics", question: "Light travels faster than sound. True or false?", options: ["False", "True", "They travel at the same speed", "It depends on the weather"], correctIndex: 1 },
+    { category: "⚡ Physics", question: "What happens when two south poles of a magnet are brought together?", options: ["They attract", "They repel", "They spark", "Nothing happens"], correctIndex: 1 },
+    { category: "⚡ Physics", question: "What device measures atmospheric pressure?", options: ["Thermometer", "Barometer", "Seismograph", "Anemometer"], correctIndex: 1 }
+];
