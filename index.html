@@ -603,14 +603,6 @@ body {
 
     <div class="page-wrapper">
 
-        <!-- ═══════════ AUTH BAR ═══════════ -->
-        <div class="auth-bar" id="auth-bar">
-            <div id="auth-user-info" class="hidden" style="display: flex; align-items: center; gap: 10px;">
-                <span id="auth-email-display" style="font-size: 13px; color: var(--text-2); font-weight: 600;"></span>
-                <button id="logout-btn" class="btn btn-ghost btn-sm" style="padding: 4px 10px; font-size: 12px;">Logout</button>
-            </div>
-            <button id="show-login-btn" class="btn btn-outline btn-sm" style="padding: 6px 14px; font-size: 13px;">Login / Cloud Save</button>
-        </div>
 
         <!-- ═══════════ SETUP SCREEN ═══════════ -->
         <section id="setup-screen" class="screen active" role="main">
@@ -620,6 +612,20 @@ body {
                 </div>
                 <h1 class="hero-title">Science<br><span class="gradient-text">Explorer</span></h1>
                 <p class="hero-sub">Pick your topic &amp; difficulty, then blast off!</p>
+
+                <!-- ═══════════ PROFILE SECTION ═══════════ -->
+                <div class="auth-bar" id="auth-bar" style="background: var(--bg-card-2); border: 1px solid var(--border); padding: 12px; border-radius: 12px; width: 100%; margin-bottom: 20px; display: flex; justify-content: center;">
+                    <div id="auth-user-info" class="hidden" style="display: flex; align-items: center; justify-content: space-between; width: 100%;">
+                        <div style="display:flex; align-items: center; gap: 8px;">
+                            <span style="font-size: 18px;">☁️</span>
+                            <span id="auth-email-display" style="font-size: 13px; color: var(--text-2); font-weight: 600;"></span>
+                        </div>
+                        <button id="logout-btn" class="btn btn-ghost btn-sm" style="padding: 4px 10px; font-size: 12px;">Logout</button>
+                    </div>
+                    <button id="show-login-btn" class="btn btn-outline btn-sm" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <span>☁️</span> Login for Cloud Save
+                    </button>
+                </div>
 
                 <div class="input-group">
                     <label class="input-label" for="player-name">YOUR NAME</label>
@@ -793,8 +799,8 @@ body {
         <!-- ═══════════ AUTH MODAL ═══════════ -->
         <div id="auth-modal" class="modal hidden">
             <div class="modal-content card" style="max-width: 360px;">
-                <h2 class="modal-title" style="margin-bottom: 8px; text-align: center;">Cloud Save</h2>
-                <p class="modal-sub" style="font-size: 13px; color: var(--text-2); text-align: center; margin-bottom: 20px;">Log in to save your progress across all devices.</p>
+                <h2 id="auth-modal-title" class="modal-title" style="margin-bottom: 8px; text-align: center;">Cloud Save Login</h2>
+                <p id="auth-modal-sub" class="modal-sub" style="font-size: 13px; color: var(--text-2); text-align: center; margin-bottom: 20px;">Log in to securely save your progress.</p>
                 <div class="input-group">
                     <label class="input-label" for="auth-email">EMAIL</label>
                     <input type="email" id="auth-email" class="name-input" placeholder="scientist@example.com">
@@ -805,8 +811,11 @@ body {
                 </div>
                 <div id="auth-error" class="auth-error hidden" style="color: var(--wrong); font-size: 13px; text-align: center; margin-bottom: 15px; font-weight: 600;"></div>
                 <div class="auth-actions" style="display: flex; flex-direction: column; gap: 10px;">
-                    <button id="login-submit-btn" class="btn btn-primary">Login</button>
-                    <button id="register-submit-btn" class="btn btn-outline">Create Account</button>
+                    <button id="auth-submit-btn" class="btn btn-primary">Login</button>
+                    <div style="text-align: center; font-size: 13px; color: var(--text-2); margin-top: 5px;">
+                        <span id="auth-toggle-text">Don't have an account?</span> 
+                        <a href="#" id="auth-toggle-link" style="color: var(--primary); font-weight: bold; text-decoration: none;">Sign up</a>
+                    </div>
                 </div>
                 <button id="close-auth-btn" class="btn btn-ghost btn-full" style="margin-top: 12px">Cancel</button>
             </div>

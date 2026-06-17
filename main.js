@@ -99,11 +99,14 @@ const authEmailDisplay = document.getElementById('auth-email-display');
 const logoutBtn        = document.getElementById('logout-btn');
 const showLoginBtn     = document.getElementById('show-login-btn');
 const authModal        = document.getElementById('auth-modal');
+const authModalTitle   = document.getElementById('auth-modal-title');
+const authModalSub     = document.getElementById('auth-modal-sub');
 const authEmailInput   = document.getElementById('auth-email');
 const authPasswordInput= document.getElementById('auth-password');
 const authError        = document.getElementById('auth-error');
-const loginSubmitBtn   = document.getElementById('login-submit-btn');
-const registerSubmitBtn= document.getElementById('register-submit-btn');
+const authSubmitBtn    = document.getElementById('auth-submit-btn');
+const authToggleLink   = document.getElementById('auth-toggle-link');
+const authToggleText   = document.getElementById('auth-toggle-text');
 const closeAuthBtn     = document.getElementById('close-auth-btn');
 
 const qCurrent         = document.getElementById('q-current');
@@ -359,13 +362,45 @@ auth.onAuthStateChanged(async (user) => {
     }
 });
 
+let authMode = 'login'; // 'login' or 'register'
+
 if(showLoginBtn) showLoginBtn.addEventListener('click', () => {
     playSound('click');
     authError.classList.add('hidden');
     authEmailInput.value = '';
     authPasswordInput.value = '';
+    
+    authMode = 'login';
+    if(authModalTitle) authModalTitle.textContent = "Cloud Save Login";
+    if(authModalSub) authModalSub.textContent = "Log in to securely save your progress.";
+    if(authSubmitBtn) authSubmitBtn.textContent = "Login";
+    if(authToggleText) authToggleText.textContent = "Don't have an account?";
+    if(authToggleLink) authToggleLink.textContent = "Sign up";
+    
     authModal.classList.remove('hidden');
 });
+
+if(authToggleLink) authToggleLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    playSound('click');
+    authError.classList.add('hidden');
+    if(authMode === 'login') {
+        authMode = 'register';
+        if(authModalTitle) authModalTitle.textContent = "Create Account";
+        if(authModalSub) authModalSub.textContent = "Sign up to enable Cloud Saving.";
+        if(authSubmitBtn) authSubmitBtn.textContent = "Create Account";
+        if(authToggleText) authToggleText.textContent = "Already have an account?";
+        if(authToggleLink) authToggleLink.textContent = "Log in";
+    } else {
+        authMode = 'login';
+        if(authModalTitle) authModalTitle.textContent = "Cloud Save Login";
+        if(authModalSub) authModalSub.textContent = "Log in to securely save your progress.";
+        if(authSubmitBtn) authSubmitBtn.textContent = "Login";
+        if(authToggleText) authToggleText.textContent = "Don't have an account?";
+        if(authToggleLink) authToggleLink.textContent = "Sign up";
+    }
+});
+
 if(closeAuthBtn) closeAuthBtn.addEventListener('click', () => {
     playSound('click');
     authModal.classList.add('hidden');
@@ -375,7 +410,7 @@ if(logoutBtn) logoutBtn.addEventListener('click', () => {
     auth.signOut();
 });
 
-async function handleAuthAction(action) {
+async function handleAuthAction() {
     playSound('click');
     authError.classList.add('hidden');
     const email = authEmailInput.value.trim();
@@ -385,8 +420,13 @@ async function handleAuthAction(action) {
         authError.classList.remove('hidden');
         return;
     }
+    
+    const originalText = authSubmitBtn.textContent;
+    authSubmitBtn.textContent = "Please wait...";
+    authSubmitBtn.disabled = true;
+    
     try {
-        if (action === 'login') {
+        if (authMode === 'login') {
             await auth.signInWithEmailAndPassword(email, pass);
         } else {
             await auth.createUserWithEmailAndPassword(email, pass);
@@ -395,10 +435,12 @@ async function handleAuthAction(action) {
     } catch(err) {
         authError.textContent = err.message;
         authError.classList.remove('hidden');
+    } finally {
+        authSubmitBtn.textContent = originalText;
+        authSubmitBtn.disabled = false;
     }
 }
-if(loginSubmitBtn) loginSubmitBtn.addEventListener('click', () => handleAuthAction('login'));
-if(registerSubmitBtn) registerSubmitBtn.addEventListener('click', () => handleAuthAction('register'));
+if(authSubmitBtn) authSubmitBtn.addEventListener('click', handleAuthAction);
 
 async function loadCloudProgress(uid) {
     try {
