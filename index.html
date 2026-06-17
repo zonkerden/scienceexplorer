@@ -796,31 +796,31 @@ body {
             </div>
         </section>
 
-        <!-- ═══════════ AUTH MODAL ═══════════ -->
-        <div id="auth-modal" class="modal hidden">
-            <div class="modal-content card" style="max-width: 360px;">
-                <h2 id="auth-modal-title" class="modal-title" style="margin-bottom: 8px; text-align: center;">Cloud Save Login</h2>
-                <p id="auth-modal-sub" class="modal-sub" style="font-size: 13px; color: var(--text-2); text-align: center; margin-bottom: 20px;">Log in to securely save your progress.</p>
-                <div class="input-group">
-                    <label class="input-label" for="auth-email">EMAIL</label>
-                    <input type="email" id="auth-email" class="name-input" placeholder="scientist@example.com">
-                </div>
-                <div class="input-group">
-                    <label class="input-label" for="auth-password">PASSWORD</label>
-                    <input type="password" id="auth-password" class="name-input" placeholder="••••••••">
-                </div>
-                <div id="auth-error" class="auth-error hidden" style="color: var(--wrong); font-size: 13px; text-align: center; margin-bottom: 15px; font-weight: 600;"></div>
-                <div class="auth-actions" style="display: flex; flex-direction: column; gap: 10px;">
-                    <button id="auth-submit-btn" class="btn btn-primary">Login</button>
-                    <div style="text-align: center; font-size: 13px; color: var(--text-2); margin-top: 5px;">
-                        <span id="auth-toggle-text">Don't have an account?</span> 
-                        <a href="#" id="auth-toggle-link" style="color: var(--primary); font-weight: bold; text-decoration: none;">Sign up</a>
-                    </div>
-                </div>
-                <button id="close-auth-btn" class="btn btn-ghost btn-full" style="margin-top: 12px">Cancel</button>
-            </div>
-        </div>
+    </div>
 
+    <!-- ═══════════ AUTH MODAL ═══════════ -->
+    <div id="auth-modal" class="modal hidden">
+        <div class="modal-content card" style="max-width: 360px;">
+            <h2 id="auth-modal-title" class="modal-title" style="margin-bottom: 8px; text-align: center;">Cloud Save Login</h2>
+            <p id="auth-modal-sub" class="modal-sub" style="font-size: 13px; color: var(--text-2); text-align: center; margin-bottom: 20px;">Log in to securely save your progress.</p>
+            <div class="input-group">
+                <label class="input-label" for="auth-email">EMAIL</label>
+                <input type="email" id="auth-email" class="name-input" placeholder="scientist@example.com">
+            </div>
+            <div class="input-group">
+                <label class="input-label" for="auth-password">PASSWORD</label>
+                <input type="password" id="auth-password" class="name-input" placeholder="••••••••">
+            </div>
+            <div id="auth-error" class="auth-error hidden" style="color: var(--wrong); font-size: 13px; text-align: center; margin-bottom: 15px; font-weight: 600;"></div>
+            <div class="auth-actions" style="display: flex; flex-direction: column; gap: 10px;">
+                <button id="auth-submit-btn" class="btn btn-primary">Login</button>
+                <div style="text-align: center; font-size: 13px; color: var(--text-2); margin-top: 5px;">
+                    <span id="auth-toggle-text">Don't have an account?</span> 
+                    <a href="#" id="auth-toggle-link" style="color: var(--primary); font-weight: bold; text-decoration: none;">Sign up</a>
+                </div>
+            </div>
+            <button id="close-auth-btn" class="btn btn-ghost btn-full" style="margin-top: 12px">Cancel</button>
+        </div>
     </div>
 
     <!-- Firebase Compat Libraries for local file:// execution -->

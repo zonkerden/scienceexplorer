@@ -487,6 +487,7 @@ async function saveCloudProgress() {
 
 // ── Main Events ───────────────────────────────────────
 startBtn.addEventListener('click', () => {
+    if(authModal) authModal.classList.add('hidden');
     playerName = playerNameInput.value.trim() || 'Scientist';
     initAudio();
     playSound('click');
